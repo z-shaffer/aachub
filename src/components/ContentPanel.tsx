@@ -514,7 +514,9 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                       }}
                       min={70}
                       max={130}
-                      style={{ fontSize: "24px" }}
+                      style={{
+                        fontSize: "24px",
+                      }}
                     />
                     <label htmlFor="tradeValueInput"> % </label>
                   </div>
@@ -524,6 +526,16 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                     calculateValues()}
                 </div>
               </h2>
+              <div
+                style={{
+                  fontSize: "1rem",
+                  position: "fixed",
+                  left: "50%",
+                  bottom: "1%",
+                }}
+              >
+                Contact chimpp on discord for any issues
+              </div>
             </div>
           </>
         )}
