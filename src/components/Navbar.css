@@ -1,0 +1,42 @@
+@font-face {
+    font-family: 'Cinzel-VariableFont_wght';
+    src: url('./assets/Cinzel-VariableFont_wght.ttf') format('truetype');
+    /* You can specify the format as 'truetype' for .ttf files */
+    font-weight:200;
+    font-style: normal;
+}
+
+.logo {}
+
+/* You can also define styles that use this font */
+.nav-item {
+    font-family: 'Cinzel-VariableFont_wght', sans-serif;
+    font-size: 16px;
+}
+
+.brown-navbar {
+background-image: linear-gradient(to top, rgba(69, 35, 8, 0.85), rgba(80, 40, 11, 0.85));    
+min-height: 80px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+color: #52504a;
+}
+
+.navbar-center {
+    margin-left: 32%;
+}
+
+.navbar-button {
+    text-decoration: none;
+    color: #9b9b9b;
+    transition: color 0.3s;
+}
+
+.navbar-button:hover {
+    color: #fcfcfc;
+    text-shadow: 0 0 5px 2px rgb(255, 255, 255);
+}
+
+.navbar-button.selected {
+    color: #fcfcfc;
+    text-shadow: 0 0 5px 2px #ffffff;
+}
