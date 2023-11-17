@@ -97,9 +97,6 @@ nuiaPortNodes.forEach((node) => {
 nuiaTradeNodes.forEach((node) => {
   fromOptions.push(node.name);
 });
-auroriaNodes.forEach((node) => {
-  fromOptions.push(node.name);
-});
 const toOptions: string[] = [];
 const carryingOptions: string[] = [];
 
