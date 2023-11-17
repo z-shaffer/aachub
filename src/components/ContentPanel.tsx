@@ -150,7 +150,6 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       let toOptions: string[] = [];
       let carryingOptions: string[] = [];
 
-      // Include goldNodes
       if (fromOptionGoldNodes) {
         toOptions = toOptions.concat(
           Object.keys(fromOptionGoldNodes).filter(
@@ -160,11 +159,19 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       }
 
       if (fromOptionGildaNodes) {
-        toOptions = toOptions.concat(Object.keys(fromOptionGildaNodes));
+        toOptions = toOptions.concat(
+          Object.keys(fromOptionGildaNodes).filter(
+            (toOption) => fromOptionGildaNodes[toOption].goldValue !== -1
+          )
+        );
       }
 
       if (fromOptionStabNodes) {
-        toOptions = toOptions.concat(Object.keys(fromOptionStabNodes));
+        toOptions = toOptions.concat(
+          Object.keys(fromOptionStabNodes).filter(
+            (toOption) => fromOptionStabNodes[toOption].goldValue !== -1
+          )
+        );
       }
 
       toOptions = [...new Set(toOptions)];
