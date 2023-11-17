@@ -390,7 +390,13 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
         break;
     }
     return (
-      <div style={{ display: "inline-block", width: "70%" }}>
+      <div
+        style={{
+          display: "inline-block",
+          width: "70%",
+          paddingLeft: "5vw",
+        }}
+      >
         {calculatedGoldValue !== -1 && (
           <span className="gold">{formatCurrency(calculatedGoldValue)}</span>
         )}
@@ -429,12 +435,13 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             </div>
             <div className="planner-content">
               <h2>
-                Crafting:
                 <div className="input-container">
+                  <label htmlFor="fromInput">Crafting:</label>
                   <input
                     type="text"
                     list="fromOptions"
                     id="fromInput"
+                    className="standard-input"
                     value={selectedFromOption}
                     onChange={(e) => {
                       setSelectedFromOption(e.target.value);
@@ -453,12 +460,13 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                     ))}
                   </datalist>
                 </div>
-                Selling:
                 <div className="input-container">
+                  <label htmlFor="toInput">Selling:</label>
                   <input
                     type="text"
                     list="toOptions"
                     id="toInput"
+                    className="standard-input"
                     value={selectedToOption}
                     onChange={(e) => setSelectedToOption(e.target.value)}
                     style={{ fontSize: "24px" }}
@@ -469,12 +477,13 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                     ))}
                   </datalist>
                 </div>
-                Carrying:
                 <div className="input-container">
+                  <label htmlFor="carryingInput">Carrying:</label>
                   <input
                     type="text"
                     list="carryingOptions"
                     id="carryingInput"
+                    className="standard-input"
                     value={selectedCarryingOption}
                     onChange={(e) => {
                       setSelectedCarryingOption(e.target.value);
@@ -493,19 +502,21 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                   </datalist>
                 </div>
                 <div className="result-container">
-                  At:
                   <div className="input-container">
+                    <label htmlFor="tradeValueInput">At: </label>
                     <input
                       type="number"
+                      id="tradeValueInput"
+                      className="smaller-input"
                       value={selectedTradeValue}
                       onChange={(e) => {
                         setSelectedTradeValue(e.target.value);
                       }}
                       min={70}
                       max={130}
-                      className="smaller-input"
+                      style={{ fontSize: "24px" }}
                     />
-                    <div className="input-value">%</div>
+                    <label htmlFor="tradeValueInput"> % </label>
                   </div>
                   {selectedFromOption &&
                     selectedToOption &&

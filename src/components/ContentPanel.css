@@ -1,9 +1,6 @@
-/* Use a base font size on the root element (e.g., html) */
 html {
     font-size: 16px;
   }
-  
-  /* Fluid typography for various elements */
   
   .content-panel {
     position: fixed;
@@ -16,34 +13,25 @@ html {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     display: flex;
-    /* Use flexbox */
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
     font-family: 'Cinzel-VariableFont_wght', sans-serif;
-    font-size: 1.5rem; /* Adjust the base font size for this element */
+    font-size: 1.5rem; 
   }
-  
-  /* Media query for screens smaller than 600px */
+
   @media only screen and (max-width: 600px) {
     .content-panel {
-      font-size: 1rem; /* Adjust the font size for smaller screens */
+      font-size: 1rem; 
     }
   }
   
-  /* Media query for screens between 600px and 900px */
   @media only screen and (min-width: 601px) and (max-width: 900px) {
     .content-panel {
-      font-size: 1.25rem; /* Adjust the font size for medium-sized screens */
+      font-size: 1.25rem; 
     }
   }
-  
-  /* ... Add more media queries as needed ... */
-  
-  /* Repeat the same approach for other elements with font sizes */
   
   .image-container {
     width: 21vw;
@@ -51,7 +39,7 @@ html {
   }
   
   .rounded-image {
-    width: 117.1%;
+    width: 100%; 
     object-fit: cover;
   }
   
@@ -114,8 +102,17 @@ html {
   }
   
   .input-container {
-    margin-left: 10px;
+    margin-bottom: 10px; 
+  }
+  
+  .input-container label {
+    margin-right: 10px; 
     display: inline-block;
+    font-size: 3rem;
+  }
+  
+  .input-container input {
+    font-size: 2rem;
   }
   
   .result-container {
@@ -125,10 +122,48 @@ html {
     white-space: nowrap;
   }
   
-  .smaller-input {
-    max-width: 50%;
+.standard-input {
+    width: 20vw; 
   }
   
+  .smaller-input {
+    width: 5vw; 
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .standard-input,
+    .smaller-input {
+      width: 80vw; 
+    }
+  }
+  
+  @media only screen and (min-width: 601px) and (max-width: 900px) {
+    .standard-input {
+      width: 40vw; 
+    }
+  
+    .smaller-input {
+      width: 20vw; 
+    }
+  }
+
+  @media only screen and (min-width: 901px) and (max-width: 1921px) {
+
+    .input-container label {
+        margin-right: 10px; 
+        display: inline-block;
+        font-size: 3.5rem; 
+      }
+
+    .standard-input {
+      width: 20vw; 
+    }
+  
+    .smaller-input {
+      width: 5vw; 
+    }
+  }
+
   .gold {
     color: #ffd700;
   }
@@ -142,13 +177,13 @@ html {
   }
   
   .gilda {
-    padding-right: 5px; /* Add px unit */
+    padding-right: 5px; 
   }
   
   .drag-stab,
   .charc-stab {
     display: inline-block;
-    padding-left: 20px; /* Add px unit */
+    padding-left: 20px; 
   }
   
   .currency-container {
