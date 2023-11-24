@@ -32,6 +32,12 @@ html {
       font-size: 1.25rem; 
     }
   }
+
+  @media only screen and (min-width: 3000px) and (max-width: 4000px) {
+    .content-panel {
+      font-size: 10; 
+    }
+  }
   
   .image-container {
     width: 21vw;

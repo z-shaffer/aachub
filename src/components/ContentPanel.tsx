@@ -566,45 +566,50 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
               />
             </div>
             <div className="news-container">
-              <div className="news-title">November 15th, 2023</div>
-              <div className="news-subtitle">Patch 1.1.7</div>
+              <div className="news-title">November 24th, 2023</div>
+              <div className="news-subtitle">Patch 1.1.8</div>
               <br />
               <ul className="news-content">
                 <li>
-                  The Reedwind zone is now available
+                  <b>Fixes/Adjustments:</b>
                   <ul>
                     <li>
-                      A custom Conflict/War cycle has been added to keep the
-                      zone interesting. Like Karkasse, Reedwind will know no
-                      peace!
+                      Hellswamp returns to normal conflict cycle but requires
+                      less kills to push
+                    </li>
+                    <li>Reedwind's war time reduced to 2 hours</li>
+                    <li>
+                      Heart of Ayanad buffed (Damage taken by boss is decreased
+                      by 30%)
+                    </li>
+                    <li>Experia Patches reenabled</li>
+                    <li>Siege defender count fixed</li>
+                  </ul>
+                </li>
+                <li>
+                  <b>Ghost Wedding (11/24/23 - 12/8/23)</b>
+                  <ul>
+                    <li>
+                      Located in White Arden, the usual event world gates can be
+                      found in Austera, Marianople, and Diamond Shores
                     </li>
                   </ul>
                 </li>
                 <li>
-                  Two new mounts have been added
+                  <b>Marketplace</b>
                   <ul>
                     <li>
-                      The first one, Aquestria, is available right away! We are
-                      letting players figure out how to get it.
+                      PayPal payment method has been made available on
+                      playcardexpress.com
                     </li>
                     <li>
-                      The second one will be revealed and become obtainable a
-                      bit later!
+                      New crypto payment system implemented, it should be a much
+                      smoother process now
                     </li>
-                  </ul>
-                </li>
-                <li>
-                  Some world bosses have been buffed slightly to make the fights
-                  longer
-                </li>
-                <li>
-                  Hasla, Perinoor, Rookborne, Windscour, Hellswamp, Cinderstone,
-                  Ynystere and Sanddeep's conflict cycle has been changed
-                  <ul>
+                    <li>New cosmetics added</li>
                     <li>
-                      All zones will have 2 hours of conflict, 2 hours of war
-                      and 2 hours of peace. These will happen at various offset
-                      in an effort to keep all zones cycling
+                      A Free Thanksgiving Gift will be available in the
+                      marketplace (x1 claim per account for characters lvl 51+)
                     </li>
                   </ul>
                 </li>
