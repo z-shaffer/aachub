@@ -1,12 +1,4 @@
-const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
-const PackType = {
-    GOLD: 'goldNode',
-    GILDA: 'gildaNode',
-    STAB: 'stabNode',
-  };
 
 const destinationSchema = new mongoose.Schema({
   name: String,
