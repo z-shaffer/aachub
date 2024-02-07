@@ -11,16 +11,12 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, { useNewUrlParser: true });
+mongoose.connect(uri);
 const connection = mongoose.connection;
 connection.once('open', () => {
-    console.log("Mongoose has established a db connection");
+    console.log("Database connected");
 })
 
-const tradeRoutesRouter = require('./routes/tradeRoutes')
-
-app.use('/tradeRoutes', tradeRoutesRouter)
-
 app.listen(port, () => {
-    console.log(`Server online: ${port}`);
-});
+    console.log(`Server online: ${port}`)
+})

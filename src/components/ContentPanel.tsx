@@ -537,7 +537,6 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                   bottom: "1%",
                 }}
               >
-                Contact chimpp on discord for any issues
               </div>
             </div>
           </>
