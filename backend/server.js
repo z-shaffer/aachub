@@ -17,6 +17,10 @@ connection.once('open', () => {
     console.log("Database connected");
 })
 
+const tradeRoutesRouter = require('./routes/tradeRoutes');
+
+app.use('/tradeRoutes', tradeRoutesRouter);
+
 app.listen(port, () => {
     console.log(`Server online: ${port}`)
 })

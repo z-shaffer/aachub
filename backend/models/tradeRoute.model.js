@@ -22,5 +22,11 @@ const tradeRouteSchema = new Schema({
     rewardValue: {
       type: Number,
       required: true
-    }
+    },
+  }, {
+    timestamps: true
   });
+
+  const TradeRoute = mongoose.model('TradeRoute', tradeRouteSchema);
+  
+  module.exports = TradeRoute;
