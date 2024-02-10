@@ -2,30 +2,28 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const tradeRouteSchema = new Schema({
-    packType: {
+const tradeRouteSchema = new mongoose.Schema({
+  packType: {
       type: String,
       required: true
-    },
-    source: {
+  },
+  source: {
       type: String,
       required: true
-    },
-    destination: {
+  },
+  destination: {
       type: String,
       required: true
-    },
-    rewardType: {
+  },
+  rewardType: {
       type: String,
       required: true
-    },
-    rewardValue: {
+  },
+  rewardValue: {
       type: Number,
       required: true
-    },
-  }, {
-    timestamps: true
-  });
+  }
+});
 
   const TradeRoute = mongoose.model('TradeRoute', tradeRouteSchema);
   

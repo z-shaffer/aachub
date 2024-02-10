@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+
 import {
   worldNodes,
   auroriaNodes,
@@ -9,7 +11,9 @@ import {
   nodeVal,
   freedichNode,
 } from "./data/NodeData";
+
 import "./ContentPanel.css";
+
 import tradeImage from "./assets/trade.jpg";
 import regradeImage from "./assets/regrade.jpg";
 import newsImage from "./assets/news.jpg";
@@ -19,7 +23,7 @@ import gilda from "./assets/gildastar.jpg";
 
 let showValues = false;
 
-// Sample arrays
+// Initial populated list of source locations
 const fromOptions: string[] = [];
 haranyaPortNodes.forEach((node) => {
   fromOptions.push(node.name);
@@ -56,6 +60,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
     };
   }, [selectedLink]);
 
+  // Keep current demand percantage between 70 and 130
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = parseFloat(event.target.value);
     if (newValue < 70) {
@@ -86,6 +91,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       let toOptions: string[] = [];
       let carryingOptions: string[] = [];
 
+      // If the source has a gold node, render its possible destinations in the destination list
       if (fromOptionGoldNodes) {
         toOptions = toOptions.concat(
           Object.keys(fromOptionGoldNodes).filter(
@@ -94,6 +100,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
         );
       }
 
+      // If the source has a gilda node, render its possible destinations in the destination list
       if (fromOptionGildaNodes) {
         toOptions = toOptions.concat(
           Object.keys(fromOptionGildaNodes).filter(
@@ -102,6 +109,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
         );
       }
 
+      // If the source has a stab node, render its possible destinations in the destination list
       if (fromOptionStabNodes) {
         toOptions = toOptions.concat(
           Object.keys(fromOptionStabNodes).filter(
@@ -110,8 +118,8 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
         );
       }
 
+      // Take the list of destinations and generate the list of possible packs
       toOptions = [...new Set(toOptions)];
-
       for (const node of [
         ...haranyaPortNodes,
         ...haranyaTradeNodes,
@@ -135,6 +143,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
   }, [selectedFromOption, goldNodes, gildaNodes, stabNodes]);
 
   const calculateValues = () => {
+    // Prepare the currency format to be rendered with the reward amount
     function formatCurrency(value: number): JSX.Element | string {
       if (value === -1) {
         return "";
@@ -161,6 +170,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
     let calculatedStabValue = -1;
     const percentageDifference = (parseInt(selectedTradeValue, 10) - 100) / 100;
 
+    // Algorithm to determine the reward based on pack type
     switch (selectedPackType) {
       case "0":
         if (
