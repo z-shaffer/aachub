@@ -91,7 +91,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       let carryingOptions: string[] = [];
       (async () => {
         try {
-          const response = await axios.get(`http://localhost:5050/tradeRoutes/${selectedFromOption}`);
+          const response = await axios.get(`${API_URL}/${selectedFromOption}`);
           toOptions = await toOptions.concat(response.data.destinations);
           toOptions = await [...new Set(toOptions)];
           setFilteredToOptions(toOptions);
