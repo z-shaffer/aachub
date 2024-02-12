@@ -24,3 +24,5 @@ app.use('/tradeRoutes', tradeRoutesRouter);
 app.listen(port, () => {
     console.log(`Server online: ${port}`)
 })
+
+module.exports = app;
