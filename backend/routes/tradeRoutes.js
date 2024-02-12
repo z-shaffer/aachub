@@ -24,4 +24,33 @@ router.get('/:packType/:source/:destination/:rewardType', async (req, res) => {
     }
 });
 
+// Pathfinding API request called on init
+router.get('/:source/', async (req, res) => {
+    const { source } = req.params;
+    try {
+        const tradeRoutes = await TradeRoute.find({ source });
+
+        if (!tradeRoutes || tradeRoutes.length === 0) {
+            return res.status(404).json({ message: 'Trade routes not found' });
+        }
+
+        // Use a Set to store unique destinations
+        const destinationSet = new Set();
+
+        // Iterate over each trade route
+        tradeRoutes.forEach(route => {
+            destinationSet.add(route.destination);
+        });
+
+        // Convert the Set to an array
+        const destinations = Array.from(destinationSet);
+
+        return res.json({ destinations });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+
 module.exports = router;

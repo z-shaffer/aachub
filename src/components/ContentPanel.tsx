@@ -75,51 +75,29 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
   const [selectedToOption, setSelectedToOption] = useState("");
   const [filteredToOptions, setFilteredToOptions] = useState<string[]>([]);
   const [selectedCarryingOption, setSelectedCarryingOption] = useState("");
-  const [filteredCarryingOptions, setFilteredCarryingOptions] = useState<
-    string[]
-  >([]);
+  const [filteredCarryingOptions, setFilteredCarryingOptions] = useState<string[]>([]);
   const [selectedTradeValue, setSelectedTradeValue] = useState("");
   const [selectedPackType, setSelectedPackType] = useState("");
+  const [calculatedGoldValue, setCalculatedGoldValue] = useState<number>(-1);
+  const [calculatedGildaValue, setCalculatedGildaValue] = useState<number>(-1);
+  const [calculatedStabValue, setCalculatedStabValue] = useState<number>(-1);
 
   useEffect(() => {
     // Update "To" dropdown options based on the selected "From" option
     const updateToOptions = () => {
-      const fromOptionGoldNodes = goldNodes[selectedFromOption];
-      const fromOptionGildaNodes = gildaNodes[selectedFromOption];
-      const fromOptionStabNodes = stabNodes[selectedFromOption];
-
       let toOptions: string[] = [];
       let carryingOptions: string[] = [];
-
-      // If the source has a gold node, render its possible destinations in the destination list
-      if (fromOptionGoldNodes) {
-        toOptions = toOptions.concat(
-          Object.keys(fromOptionGoldNodes).filter(
-            (toOption) => fromOptionGoldNodes[toOption].goldValue !== -1
-          )
-        );
-      }
-
-      // If the source has a gilda node, render its possible destinations in the destination list
-      if (fromOptionGildaNodes) {
-        toOptions = toOptions.concat(
-          Object.keys(fromOptionGildaNodes).filter(
-            (toOption) => fromOptionGildaNodes[toOption].goldValue !== -1
-          )
-        );
-      }
-
-      // If the source has a stab node, render its possible destinations in the destination list
-      if (fromOptionStabNodes) {
-        toOptions = toOptions.concat(
-          Object.keys(fromOptionStabNodes).filter(
-            (toOption) => fromOptionStabNodes[toOption].goldValue !== -1
-          )
-        );
-      }
-
+      (async () => {
+        try {
+          const response = await axios.get(`http://localhost:5050/tradeRoutes/${selectedFromOption}`);
+          toOptions = await toOptions.concat(response.data.destinations);
+          toOptions = await [...new Set(toOptions)];
+          setFilteredToOptions(toOptions);
+        } catch (error) {
+            console.error('Error fetching trade routes:', error);
+        }
+      })();
       // Take the list of destinations and generate the list of possible packs
-      toOptions = [...new Set(toOptions)];
       for (const node of [
         ...haranyaPortNodes,
         ...haranyaTradeNodes,
@@ -135,12 +113,11 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
           carryingOptions = carryingOptions.concat(node.communityPack!);
         }
       }
-      setFilteredToOptions(toOptions);
       setFilteredCarryingOptions(carryingOptions);
     };
 
     updateToOptions();
-  }, [selectedFromOption, goldNodes, gildaNodes, stabNodes]);
+  }, [selectedFromOption]);
 
   const calculateValues = () => {
     // Prepare the currency format to be rendered with the reward amount
@@ -148,7 +125,6 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       if (value === -1) {
         return "";
       }
-
       const gold = Math.floor(value);
       const silver = Math.floor((value - gold) * 100);
       const copper = Math.floor(((value - gold) * 100 - silver) * 100);
@@ -164,180 +140,152 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
 
       return formattedResult;
     }
-
-    let calculatedGoldValue = -1;
-    let calculatedGildaValue = -1;
-    let calculatedStabValue = -1;
     const percentageDifference = (parseInt(selectedTradeValue, 10) - 100) / 100;
 
+    let baseGoldValue = 0;
+    let baseGildaValue = 0;
+    let baseStabValue = 0;
+    let tradeValue = parseInt(selectedTradeValue, 10);
+    prepareValues();
     // Algorithm to determine the reward based on pack type
-    switch (selectedPackType) {
-      case "0":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].goldValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].goldValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
+    async function prepareValues() {
+      let responseGold = null;
+      let responseGilda = null;
+      let responseStab = null;
+      const API_URL = 'http://localhost:5050/tradeRoutes'
+      switch (selectedPackType) {
+        case "0":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/goldValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+            
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/goldValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/goldValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+            
+          }
+          catch {
+            
+          }
+          break;
+        case "1":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/gildaValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/gildaValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/gildaValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          break;
+        case "2":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/fellowshipValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/fellowshipValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/fellowshipValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          break;
+        case "3":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/fertValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/fertValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/fertValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          break;
+        case "4":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/honeyValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/honeyValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/honeyValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          break;
+        case "5":
+          try {
+            responseGold = await axios.get(`${API_URL}/goldNodes/${selectedFromOption}/${selectedToOption}/cheeseValue`);
+            baseGoldValue = parseFloat(responseGold.data);
+            setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          try {
+            responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/cheeseValue`);
+            baseGildaValue = parseFloat(responseGilda.data);
+            setCalculatedGildaValue((baseGildaValue / 1.3) * (tradeValue / 100));
+            responseStab = await axios.get(`${API_URL}/stabNodes/${selectedFromOption}/${selectedToOption}/cheeseValue`);
+            baseStabValue = parseFloat(responseStab.data);
+            setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
+          }
+          catch {
+            
+          }
+          break;
         }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].goldValue !== -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].goldValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].goldValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].goldValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
-      case "1":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].gildaValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].gildaValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].gildaValue !== -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].gildaValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].gildaValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].gildaValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
-      case "2":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].fellowshipValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].fellowshipValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].fellowshipValue !==
-            -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].fellowshipValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].fellowshipValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].fellowshipValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
-      case "3":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].fertValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].fertValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].fertValue !== -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].fertValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].fertValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].fertValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
-      case "4":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].honeyValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].honeyValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].honeyValue !== -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].honeyValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].honeyValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].honeyValue / 1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
-      case "5":
-        if (
-          goldNodes[selectedFromOption][selectedToOption] &&
-          goldNodes[selectedFromOption][selectedToOption].cheeseValue !== -1
-        ) {
-          calculatedGoldValue =
-            (goldNodes[selectedFromOption][selectedToOption].cheeseValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          gildaNodes[selectedFromOption][selectedToOption] &&
-          gildaNodes[selectedFromOption][selectedToOption].cheeseValue !== -1
-        ) {
-          calculatedGildaValue =
-            (gildaNodes[selectedFromOption][selectedToOption].cheeseValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        if (
-          stabNodes[selectedFromOption][selectedToOption] &&
-          stabNodes[selectedFromOption][selectedToOption].cheeseValue !== -1
-        ) {
-          calculatedStabValue =
-            (stabNodes[selectedFromOption][selectedToOption].cheeseValue /
-              1.3) *
-            (parseInt(selectedTradeValue, 10) / 100);
-        }
-        break;
     }
+
+    // Return the calculated reward amount and currency
     return (
       <div
         style={{
@@ -417,7 +365,10 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                     id="toInput"
                     className="standard-input"
                     value={selectedToOption}
-                    onChange={(e) => setSelectedToOption(e.target.value)}
+                    onChange={(e) => { setSelectedToOption(e.target.value);
+                      setCalculatedGildaValue(-1);
+                      setCalculatedStabValue(-1);
+                      setCalculatedGoldValue(-1);}}
                     style={{ fontSize: "24px" }}
                   />
                   <datalist id="toOptions">
@@ -441,6 +392,9 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                           .findIndex((option) => option === e.target.value)
                           .toString()
                       );
+                      setCalculatedGildaValue(-1);
+                      setCalculatedStabValue(-1);
+                      setCalculatedGoldValue(-1);
                     }}
                     style={{ fontSize: "24px" }}
                   />
@@ -465,6 +419,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
                       max={130}
                       style={{
                         fontSize: "24px",
+                        appearance: "none"
                       }}
                     />
                     <label htmlFor="tradeValueInput"> % </label>
@@ -511,51 +466,31 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
               />
             </div>
             <div className="news-container">
-              <div className="news-title">November 24th, 2023</div>
-              <div className="news-subtitle">Patch 1.1.8</div>
+              <div className="news-title">January 31st, 2024</div>
+              <div className="news-subtitle">Patch 1.1.15</div>
               <br />
               <ul className="news-content">
                 <li>
-                  <b>Fixes/Adjustments:</b>
+                  <b>General</b>
                   <ul>
-                    <li>
-                      Hellswamp returns to normal conflict cycle but requires
-                      less kills to push
-                    </li>
-                    <li>Reedwind's war time reduced to 2 hours</li>
-                    <li>
-                      Heart of Ayanad buffed (Damage taken by boss is decreased
-                      by 30%)
-                    </li>
+                    <li>Commerce was changed! More labor but more gold!</li>
+                    <li>Abyssal Attack is impacted by the commerce change!</li>
+                    <li>The log-in tracker for February has been added</li>
                     <li>Experia Patches reenabled</li>
-                    <li>Siege defender count fixed</li>
+                    <li>Fixes were applied to the extra hotbars</li>
                   </ul>
                 </li>
                 <li>
-                  <b>Ghost Wedding (11/24/23 - 12/8/23)</b>
+                  <b>Transfers</b>
                   <ul>
-                    <li>
-                      Located in White Arden, the usual event world gates can be
-                      found in Austera, Marianople, and Diamond Shores
-                    </li>
+                    <li>Players can now transfer from East to West again, we will continue to monitor this going forward.</li>
                   </ul>
                 </li>
                 <li>
-                  <b>Marketplace</b>
+                  <b>New Player Experience Revised</b>
                   <ul>
-                    <li>
-                      PayPal payment method has been made available on
-                      playcardexpress.com
-                    </li>
-                    <li>
-                      New crypto payment system implemented, it should be a much
-                      smoother process now
-                    </li>
-                    <li>New cosmetics added</li>
-                    <li>
-                      A Free Thanksgiving Gift will be available in the
-                      marketplace (x1 claim per account for characters lvl 51+)
-                    </li>
+                    <li>We've streamlined some of the New Player leveling experience now that we've progressed enough into the server's timeline.</li>
+                    <li>A Written Guide has been Provided for anyone Starting the Server that will guide them from start to Level 52, including the receiving of their Catch Up Kit. https://forum.aa-classic.com/index.php?threads/aa-classic-new-player-guide-2024.841/</li>
                   </ul>
                 </li>
               </ul>
