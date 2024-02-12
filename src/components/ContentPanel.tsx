@@ -23,6 +23,8 @@ import gilda from "./assets/gildastar.jpg";
 
 let showValues = false;
 
+const API_URL = 'http://ec2-44-195-135-138.compute-1.amazonaws.com:5050/tradeRoutes'
+
 // Initial populated list of source locations
 const fromOptions: string[] = [];
 haranyaPortNodes.forEach((node) => {
@@ -152,7 +154,6 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
       let responseGold = null;
       let responseGilda = null;
       let responseStab = null;
-      const API_URL = 'http://localhost:5050/tradeRoutes'
       switch (selectedPackType) {
         case "0":
           try {
