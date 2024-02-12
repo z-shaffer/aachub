@@ -4,10 +4,13 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  build: {
-    manifest: true,
-    rollupOptions: {
-      input: '/backend/server.js',
+  server: {
+    proxy: {
+      '/tradeRoutes': {
+        target: 'http://localhost:5050', 
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/tradeRoutes/, ''),
+      },
     },
   },
 });
