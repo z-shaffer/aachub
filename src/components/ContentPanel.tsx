@@ -161,9 +161,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
             
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/goldValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -173,9 +171,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
             
           }
-          catch {
-            
-          }
+          catch {}
           break;
         case "1":
           try {
@@ -183,9 +179,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseGoldValue = parseFloat(responseGold.data);
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/gildaValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -194,9 +188,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseStabValue = parseFloat(responseStab.data);
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           break;
         case "2":
           try {
@@ -204,9 +196,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseGoldValue = parseFloat(responseGold.data);
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/fellowshipValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -215,9 +205,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseStabValue = parseFloat(responseStab.data);
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           break;
         case "3":
           try {
@@ -225,9 +213,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseGoldValue = parseFloat(responseGold.data);
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/fertValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -236,9 +222,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseStabValue = parseFloat(responseStab.data);
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           break;
         case "4":
           try {
@@ -246,9 +230,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseGoldValue = parseFloat(responseGold.data);
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/honeyValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -257,9 +239,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseStabValue = parseFloat(responseStab.data);
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           break;
         case "5":
           try {
@@ -267,9 +247,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseGoldValue = parseFloat(responseGold.data);
             setCalculatedGoldValue((baseGoldValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           try {
             responseGilda = await axios.get(`${API_URL}/gildaNodes/${selectedFromOption}/${selectedToOption}/cheeseValue`);
             baseGildaValue = parseFloat(responseGilda.data);
@@ -278,9 +256,7 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
             baseStabValue = parseFloat(responseStab.data);
             setCalculatedStabValue((baseStabValue / 1.3) * (tradeValue / 100));
           }
-          catch {
-            
-          }
+          catch {}
           break;
         }
     }
