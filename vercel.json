@@ -1,0 +1,6 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "src/App.tsx", "use": "@vercel/node" }
+    ]
+  }

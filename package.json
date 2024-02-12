@@ -4,10 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
-    "start:backend": "cd backend && nodemon server",
-    "start:frontend": "vite",
-    "build": "react-scripts build"
+    "build": "vite build"
   },
   "dependencies": {
     "@babel/runtime": "^7.23.2",
@@ -36,6 +33,6 @@
     "@vitejs/plugin-react": "^3.1.0",
     "nodemon": "^3.0.3",
     "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "vite": "^4.5.2"
   }
 }
