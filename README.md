@@ -1,4 +1,4 @@
-![image](https://github.com/z-shaffer/aachub/assets/68123195/e3cd1745-d12d-4370-a36d-9653d3e55936)
+![image](https://github.com/z-shaffer/aachub/assets/68123195/c6d8fbc6-cb6a-4a19-955a-553024b36f91)
 
 # About
 
