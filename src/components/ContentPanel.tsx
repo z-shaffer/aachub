@@ -443,31 +443,16 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
               />
             </div>
             <div className="news-container">
-              <div className="news-title">January 31st, 2024</div>
-              <div className="news-subtitle">Patch 1.1.15</div>
+              <div className="news-title">May 22nd, 2024</div>
+              <div className="news-subtitle">Patch 1.2.7</div>
               <br />
               <ul className="news-content">
                 <li>
                   <b>General</b>
                   <ul>
-                    <li>Commerce was changed! More labor but more gold!</li>
-                    <li>Abyssal Attack is impacted by the commerce change!</li>
-                    <li>The log-in tracker for February has been added</li>
-                    <li>Experia Patches reenabled</li>
-                    <li>Fixes were applied to the extra hotbars</li>
-                  </ul>
-                </li>
-                <li>
-                  <b>Transfers</b>
-                  <ul>
-                    <li>Players can now transfer from East to West again, we will continue to monitor this going forward.</li>
-                  </ul>
-                </li>
-                <li>
-                  <b>New Player Experience Revised</b>
-                  <ul>
-                    <li>We've streamlined some of the New Player leveling experience now that we've progressed enough into the server's timeline.</li>
-                    <li>A Written Guide has been Provided for anyone Starting the Server that will guide them from start to Level 52, including the receiving of their Catch Up Kit. https://forum.aa-classic.com/index.php?threads/aa-classic-new-player-guide-2024.841/</li>
+                    <li>Hanure the Berserker has been nerfed slightly. The main changes revolve around its permanent health regen being reduced, the range and number of Ruins being reduced, and the cooldown of Ruins being increased</li>
+                    <li>Special Lunafrosts have been added, granting the Dimensional Destroyer buff in dungeons</li>
+                    <li>The announcement for rare Sunfish pools is now worldwide</li>
                   </ul>
                 </li>
               </ul>
