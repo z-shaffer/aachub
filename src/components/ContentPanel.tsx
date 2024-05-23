@@ -443,16 +443,27 @@ function ContentPanel({ selectedLink }: ContentPanelProps) {
               />
             </div>
             <div className="news-container">
-              <div className="news-title">May 22nd, 2024</div>
-              <div className="news-subtitle">Patch 1.2.7</div>
+              <div className="news-title">May 15th, 2024</div>
+              <div className="news-subtitle">Patch 1.2.5</div>
               <br />
               <ul className="news-content">
                 <li>
                   <b>General</b>
                   <ul>
-                    <li>Hanure the Berserker has been nerfed slightly. The main changes revolve around its permanent health regen being reduced, the range and number of Ruins being reduced, and the cooldown of Ruins being increased</li>
-                    <li>Special Lunafrosts have been added, granting the Dimensional Destroyer buff in dungeons</li>
-                    <li>The announcement for rare Sunfish pools is now worldwide</li>
+                    <li>Accessory Resealing has been added. It follows the same pattern as the weapon and armor resealing</li>
+                    <li>Saltwater Fish Schools will now accept all types of Chopped Fish as chum</li>
+                    <li>The movement speed has been increased to 10,0 m/s for the following mounts:
+                      <ul>
+                        <li>Royal Griffin</li>
+                        <li>Vanity Bouncy Cow</li>
+                        <li>Vanity Hellfire Steed</li>
+                      </ul>
+                    </li>
+                    <li>Vanity Hero Statues have been added.</li>
+                    <li>The Immunity Zone at the top of Veroe is now turned into a proper Peace Zone</li>
+                    <li>The Pawesome Festival has been extended by a week</li>
+                    <li>A crafting recipe has been added in Mirage Isle, under Vanity Mounts category</li>
+                    <li>The visual effect for Crystal Nova (Crystal Wings glider skill) has been fixed</li>
                   </ul>
                 </li>
               </ul>
